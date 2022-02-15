@@ -7,11 +7,11 @@ public class DBManager {
     private static ArrayList<Car> cars = new ArrayList<>();
     private static int id = 1;
 
-    static {
-        cars.add(new Car(id++, "BMW", "530", 40000));
-        cars.add(new Car(id++, "Mers", "E200", 44000));
-        cars.add(new Car(id++, "Honda", "CR-V", 34000));
-    }
+//    static {
+//        cars.add(new Car(id++, "BMW", "530", 40000));
+//        cars.add(new Car(id++, "Mers", "E200", 44000));
+//        cars.add(new Car(id++, "Honda", "CR-V", 34000));
+//    }
 
     public static List<Car> getCars() {
         return cars;

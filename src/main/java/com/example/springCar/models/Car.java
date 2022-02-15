@@ -4,24 +4,40 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 
-
+@Entity
 public class Car implements Serializable {
-    private  Integer id;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)// для автоинкримента
+   private  Integer id;
+
     private  String mark;
     private  String modelka;
     private  int price;
+    @ManyToOne(fetch = FetchType.EAGER)
+     private Country country;
 
-    public Car(Integer id, String mark, String modelka, int price) {
+    public Car(){}
+    public Car(Integer id, String mark, String modelka, int price, Country country) {
         this.id = id;
         this.mark = mark;
         this.modelka = modelka;
         this.price = price;
+        this.country = country;
     }
 
-    public int getId() {
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Integer getId() {
         return id;
     }
 

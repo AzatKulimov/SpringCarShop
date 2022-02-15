@@ -1,34 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Change</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: darkslategrey">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Car Shop</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{'/'}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/add">Add car</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main.html}">
+<div layout:fragment="car_fragment">
     <div class="row mt-5">
         <div class="col-sm-6 offset-3">
             <h1>Change</h1>
-            <form th:action="@{'/editCar/'+${car.getId()}}" method="post">
+               <form th:action="@{'/editCar/'+${car.getId().intValue()}}" method="post">
                 <div class="form-group">
                     <label>Mark : </label>
                     <input type="text" name="car_mark" class="form-control" th:value="${car.getMark()}">
@@ -41,12 +17,40 @@
                     <label>Price : </label>
                     <input type="number" name="car_price" class="form-control" th:value="${car.getPrice()}">
                 </div>
+                   <div class="form-group mt-3">
+                       <label th:text="#{label.country}"></label>
+                       <select class="form-control" name="country_id">
+                           <option th:each="country : ${countries}" th:selected="${car.country!=null&&country!=null&&car.country.id==country.id}" th:text="${country.name} + ' / ' + ${country.ticker}" th:value="${country.id}"></option>
+                       </select>
+                   </div>
                 <div class="form-group">
                     <button class="btn btn-success">UPDATE</button>
+                   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#remove">
+                       Remove
+                   </button>
                 </div>
-            </form>
+                   <!-- Модальное окно -->
+                   <div class="modal fade" id="remove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                       <div class="modal-dialog">
+                           <div class="modal-content">
+                               <form th:action="@{'/delete/'+${car.id}}" method="post">
+                                   <div class="modal-header">
+                                       <h5 class="modal-title" id="staticBackdropLabel">Удаление машины</h5>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                   </div>
+                                   <div class="modal-body">
+                                       <p>Вы точно хотите удалить эту машину?</p>
+                                   </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                                       <button class="btn btn-danger">ДА</button>
+                                   </div>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+               </form>
         </div>
     </div>
 </div>
-</body>
 </html>

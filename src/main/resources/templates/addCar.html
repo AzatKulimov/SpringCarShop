@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main.html}">
+<div layout:fragment="car_fragment">
+    <div class="row mt-5">
+        <div class="col-sm-6 offset-3">
+            <h1 th:text="#{name_page.add}"></h1>
+            <form th:action="@{'/addCar'}" method="post">
+       <div class="form-group">
+           <label>Mark : </label>
+           <input type="text" name="car_mark" class="form-control" placeholder="Car 000">
+       </div>
+       <div class="form-group">
+           <label>Model : </label>
+           <input type="text" name="car_model" class="form-control" >
+       </div>
+       <div class="form-group">
+           <label>Price : </label>
+           <input type="number" name="car_price" class="form-control">
+       </div>
+       <div class="form-group mt-3">
+            <label th:text="#{label.country}"></label>
+            <select class="form-control" name="country_id">
+              <option th:each="country : ${countries}" th:text="${country.name} + ' / ' + ${country.ticker}" th:value="${country.id}"></option>
+                    </select>
+       </div>
+       <div class="form-group">
+           <button class="btn btn-success">Add Car</button>
+       </div>
+   </form>
+        </div>
+    </div>
+</div>
+
+</html>
